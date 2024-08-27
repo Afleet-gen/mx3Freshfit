@@ -69,7 +69,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16.0),
-                child: RaisedButton(
+                child: TextButton(
                   child: Text('Select Delivery Date'),
                   onPressed: () async {
                     final selectedDate = await showDatePicker(
@@ -89,7 +89,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               
               Container(
                 padding: EdgeInsets.only(top: 16.0),
-                child: RaisedButton(
+                child: TextButton(
                   child: Text('Submit'),
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {

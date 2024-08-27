@@ -38,8 +38,8 @@ print("Sum : ${sum}");
                     i.removeAt(index);
                   });*/
                   // Shows the information on Snackbar
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text("$i dismissed")));
+                  //Scaffold.of(context)
+                   //   .SnackBar(SnackBar(content: Text("$i dismissed")));
                 },
                 background: Container(color: Colors.red),
                 child:ListTile(

@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:place_picker/place_picker.dart';
+import 'package:ionicons/ionicons.dart';
+//import 'package:place_picker/place_picker.dart';
 import 'login.dart';
 import 'ad_helper.dart';
 import 'package:http/http.dart' as http;
@@ -72,6 +73,8 @@ class Rutimetable extends StatefulWidget {
 class _RutimetableState extends State<Rutimetable> {
   bool lang1 = false;
   var lang2;
+  late Fluttertoast flutterToast;
+
 
   Future<void> startCheckout(
       {required String userPhone, required double amount}) async {
@@ -125,7 +128,7 @@ class _RutimetableState extends State<Rutimetable> {
   GlobalKey _three = GlobalKey();
   String selectedValue = "Settings";
   retball() {
-    Widget toast = Container(
+    Widget toast = salenote?SizedBox():Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -158,11 +161,30 @@ class _RutimetableState extends State<Rutimetable> {
       ),
     );
 
-    flutterToast.showToast(
-      child: toast,
-      gravity: ToastGravity.TOP_RIGHT,
-      toastDuration: const Duration(seconds: 2),
-    );
+   Fluttertoast.showToast(
+    //webPosition: "right",
+msg:  (int.parse(generateRandomString2(1)) / 7) != 0
+              ? lang2 != "Kiswahili (🇰🇪)"
+                  ? 
+                      " ${generateRandomString(1)}******${generateRandomString2(1)}" +
+                          " just completed an Order"
+                  : 
+                      "${generateRandomString(1)}******${generateRandomString2(1)}" +
+                          " Amekamilisha Order"
+              : lang2 != "Kiswahili (🇰🇪)"
+                  ? 
+                      "${generateRandomString(1)}******${generateRandomString2(1)}" +
+                          "+ 5 others made a group order"
+                  : 
+                      "${generateRandomString(1)}******${generateRandomString2(1)}" +
+                          " na Wengine 5 walifanya agizo la kikundi",
+//toastLength: Toast.LENGTH_SHORT,
+gravity: ToastGravity.TOP,
+//timeInSec: 1,
+backgroundColor: Colors.grey.withOpacity(0.4),
+textColor: Colors.white,
+fontSize: 16.0
+);
   }
 
   String generateRandomString(int lengthOfString) {
@@ -470,17 +492,17 @@ class _RutimetableState extends State<Rutimetable> {
     MpesaFlutterPlugin.setConsumerSecret('kL2L4KMvGhZDqIZn');
 
     String token = widget.token;
-    //https://afleet.co.ke/restaurant/ http://172.16.12.17:8000/
+    //http://192.168.100.226:8000/restaurant/ http://172.16.12.17:8000/
     print('rono' + token);
     //print(widget.token); wasn't easy but never stopped
     var headers = {
       'Authorization': 'Token ${token}',
     };
     http.Response responsev = await http.get(
-        Uri.parse('https://afleet.co.ke/restaurant/' + widget.title),
+        Uri.parse('http://192.168.100.226:8000/restaurant/1/'),// + widget.title),
         headers: headers);
     http.Response picpic1 = await http
-        .get(Uri.parse('https://afleet.co.ke/profpic/'), headers: headers);
+        .get(Uri.parse('http://192.168.100.226:8000/profpic/'), headers: headers);
     var results = jsonDecode(responsev.body);
     var picpic = jsonDecode(picpic1.body);
     setState(() {
@@ -547,17 +569,17 @@ class _RutimetableState extends State<Rutimetable> {
   bool legal = true;
 
   void showPlacePicker() async {
-    LocationResult? result = await Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            PlacePicker("AIzaSyA7fRUg_vYd8Q3lxCiGo9IKsIIVgrAT564")));
+   // LocationResult? result = await Navigator.of(context).push(MaterialPageRoute(
+  //      builder: (context) =>
+//            PlacePicker("AIzaSyA7fRUg_vYd8Q3lxCiGo9IKsIIVgrAT564")));
 
     // Handle the result in your way
     //print(result);F
     setState(() {
-      wild = result?.name;
-      wild2 = result?.latLng;
+     // wild = result?.name;
+      //wild2 = result?.latLng;
     });
-    this.wild = result?.name;
+    //this.wild = result?.name;
     //print(wild);
     // Navigator.pop(context);
     //Navigator.pop(context);
@@ -639,7 +661,7 @@ class _RutimetableState extends State<Rutimetable> {
       'Authorization': 'Token ${token}',
     };
     http.Response responsev =
-        await http.post(Uri.parse('https://afleet.co.ke/orderff/'),
+        await http.post(Uri.parse('http://192.168.100.226:8000/orderff/'),
             headers: {
               'Content-Type': 'application/json; charset=UTF-8',
               'Authorization': 'Token $token',
@@ -671,9 +693,9 @@ class _RutimetableState extends State<Rutimetable> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = await http
-        .get(Uri.parse('https://afleet.co.ke/foodff/'), headers: headers);
+        .get(Uri.parse('http://192.168.100.226:8000/foodff/'), headers: headers);
     http.Response responsej = await http
-        .get(Uri.parse('https://afleet.co.ke/orderff/'), headers: headers);    
+        .get(Uri.parse('http://192.168.100.226:8000/orderff/'), headers: headers);    
     var xcv = jsonDecode(responsev.body);
      var xcv2 = jsonDecode(responsej.body);
     setState(() {
@@ -725,7 +747,7 @@ class _RutimetableState extends State<Rutimetable> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = await http
-        .get(Uri.parse('https://afleet.co.ke/orderff/'), headers: headers);
+        .get(Uri.parse('http://192.168.100.226:8000/orderff/'), headers: headers);
     var xcv = jsonDecode(responsev.body);
     
 
@@ -744,7 +766,7 @@ class _RutimetableState extends State<Rutimetable> {
       String sender, String message_me, String receiver, String time) async {
     //print(utf8.encode(titleController.text));
     http.Response response1 = await http.post(
-      Uri.parse('https://afleet.co.ke/chatff/'),
+      Uri.parse('http://192.168.100.226:8000/chatff/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       }, //'id','sender','message_me','receiver','time'
@@ -779,7 +801,6 @@ class _RutimetableState extends State<Rutimetable> {
   }
 
   String ii = '1';
-  late FlutterToast flutterToast;
   orderzangu() {
     var counter = 30;
     Timer.periodic(Duration(seconds: int.parse(generateRandomString3(2))),
@@ -816,13 +837,13 @@ sharedPreferences.setString('yoi', yoi.toString());
     var mode = sharedPreferences.getBool('darkmode'); //
     var o6 = sharedPreferences.getBool('salenote');
     //var o2 = jsonDecode(sharedPreferences.getString('cart'));
-    var o3 = jsonDecode(sharedPreferences.getString('food2'));
-    var o4 = jsonDecode(sharedPreferences.getString('food7'));
+    var o3 = jsonDecode(sharedPreferences.getString('food2')!);
+    var o4 = jsonDecode(sharedPreferences.getString('food7')!);
     //var o5 = jsonDecode(sharedPreferences.getString('sky'));
     //var o6 = jsonDecode(sharedPreferences.getString('salenote'));
-    var o7 = jsonDecode(sharedPreferences.getString('wild'));
+    var o7 = jsonDecode(sharedPreferences.getString('wild')!);
 
-    var o8 = jsonDecode(sharedPreferences.getString('wild2'));
+    var o8 = jsonDecode(sharedPreferences.getString('wild2')!);
     var o9 = sharedPreferences.getString('lang2');
     //var oo = jsonDecode(sharedPreferences.get('sky2'));
     // = jsonDecode(
@@ -832,8 +853,8 @@ sharedPreferences.setString('yoi', yoi.toString());
       food2 = o3; //jsonDecode(o3);
       food7 = o4;
       lang2 = o9;
-      darkmode = mode;
-      salenote = o6;
+      darkmode = mode!;
+      salenote = o6!;
       //sky = o5;
       //titleController4 = o6;
       wild = o7;
@@ -852,7 +873,7 @@ sharedPreferences.setString('yoi', yoi.toString());
     getfood();
    
 
-    flutterToast = FlutterToast(context);
+    //flutterToast = flutterToast!;
     getWeather();
 
     _bannerAd = BannerAd(
@@ -949,20 +970,15 @@ sharedPreferences.setString('yoi', yoi.toString());
                 primarySwatch: Colors.green,
               ),
               home: Scaffold(
-                body: ShowCaseWidget(
-                  onStart: (index, key) {
-                    //log('onStart: $index, $key');
-                  },
-                  onComplete: (index, key) {
-                    //log('onComplete: $index, $key');
-                  },
-                  builder: Builder(
-                    builder: (context) => DefaultTabController(
+                 backgroundColor: scaffold1,
+                body:  DefaultTabController(
                         length: sky['menu'][0]['menu'].length + 1,
                         child: Scaffold(
+                          extendBody: true,
                             //key: _scaffoldKey,
                             backgroundColor: scaffold1,
-                            drawer: Drawer(
+                            drawer: 
+                            Drawer(
                                 //isScrollControlled: true,
 
                                 child: Scaffold(
@@ -977,6 +993,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                             MediaQuery.of(context).size.height *
                                                 .4250959),
                                 child: Container(
+                                  color: scaffold1,
                                   padding: const EdgeInsets.all(10.0),
                                   child: Card(
                                       color: scaffold1,
@@ -989,7 +1006,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                               .05,
                                         ),
                                         Row(children: [
-                                          Container(width: 4),
+                                          Container(width: 14),
                                           Stack(children: [
                                             InkWell(
                                               onTap: () {
@@ -1044,6 +1061,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                   radius: 5,
                                                   child: const Icon(
                                                       Icons.camera_alt,
+                                                      color:  Colors.grey,
                                                       size: 7)),
                                             )
                                           ])
@@ -1085,7 +1103,8 @@ sharedPreferences.setString('yoi', yoi.toString());
                                       ])),
                                 ),
                               ),
-                              body: RefreshIndicator(
+                              body: 
+                              RefreshIndicator(
                                 onRefresh: () async {
                                   // offnd();
                                   //Do whatever you want on refrsh.Usually update the date of the listview
@@ -1406,7 +1425,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                                   Text(
                                                                       lang2 !=
                                                                               "Kiswahili (🇰🇪)"
-                                                                          ? "Select your prefered language"
+                                                                          ? "prefered language"
                                                                           : "Chagua Lugha yako",
                                                                       style: GoogleFonts.lato(
                                                                           color:
@@ -1666,6 +1685,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                 ),
                               ),
                               bottomNavigationBar: Container(
+                                color: scaffold1.withOpacity(0.4),
                                 // padding:EdgeInsets.all(8),
                                 height: 100,
                                 child: Column(
@@ -1676,7 +1696,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                           width: 30,
                                           child:
                                               Image.asset("assets/carrot.png")),
-                                      Text("Freshfit",
+                                      Text("Freshfit",//change here
                                           style: GoogleFonts.lato(
                                               fontSize: 15,
                                               color: text1,
@@ -1686,7 +1706,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                             )),
                             appBar: AppBar(
                               iconTheme: IconThemeData(color: icon1),
-
+                              
                               /*leading: FloatingActionButton(
                             backgroundColor: Colors.transparent,
                             elevation: 0,
@@ -1706,9 +1726,9 @@ sharedPreferences.setString('yoi', yoi.toString());
                                         "assets/play_store_512.png")))),*/
                               //centerTitle:true,
                               title: Wrap(children: [
-                                Text("FreshFit",
+                                Text("Freshfit",
                                     style: GoogleFonts.lato(color: text1)),
-                                Shimmer.fromColors(
+                                /*Shimmer.fromColors(
                                   period: const Duration(milliseconds: 5500),
                                   baseColor: Colors.green.shade300,
                                   highlightColor: Colors.green.shade900,
@@ -1716,14 +1736,17 @@ sharedPreferences.setString('yoi', yoi.toString());
                                       style: GoogleFonts.lato(
                                           //color: Colors.green,
                                           fontWeight: FontWeight.w300)),
-                                ),
+                                ),*/
                               ]),
                               actions: [
-                                FloatingActionButton(
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                    mini: true,
-                                    onPressed: () {
+                                SizedBox(
+                                  width:100,
+                                  child:Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children:[
+ InkWell(
+                                    
+                                    onTap: () {
                                       getfood();
 
                                       Navigator.push(
@@ -1740,19 +1763,306 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                 )),
                                       );
                                     },
-                                    child: Icon(
-                                      Icons.search,
-                                      color: darkmode
-                                          ? Colors.white
-                                          : Colors.black,
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: Colors.transparent,
+                                      child: Icon(
+                                        Icons.search,
+                                        size: 28.0,
+                                        color: darkmode
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
                                     )),
-                                FloatingActionButton(
-                                    backgroundColor:
-                                        const Color.fromARGB(0, 32, 5, 5),
-                                    elevation: 0,
-                                    mini: true,
-                                    onPressed: () {
-                                      showModalBottomSheet(
+                                  PopupMenuButton<String>(
+                          elevation: 0.0,
+                            color: Colors.transparent,
+                            child:
+                             SizedBox(
+                             
+                              
+                                child:  CircleAvatar(
+                                    radius:17,
+                                    backgroundColor: Colors.red,
+                                    
+                                  
+                                ),
+                              ),
+                            
+                            onSelected: (String result) {
+                              setState(() {
+                                // Handle result from pop-up menu
+                              });
+                            },
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<String>>[
+                                  PopupMenuItem<String>(
+                                    padding: const EdgeInsets.all(25.0),
+                                    // offset:Offset.fromDirection(-20.0),
+                                    value: 'switch account',
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                         // width:550,
+                                          padding: const EdgeInsets.all(15.0),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: darkmode
+                                                ? Colors.blueGrey.shade900
+                                                : Colors.blueGrey.shade100,
+                                          ),
+                                          //x["skills"] .toString().replaceAll("[","").replaceAll("]","").split(",")
+                                          // height: 200,
+                                          width: MediaQuery.of(context).size.width,
+                                          child: Column(
+                                            children: [
+                                              
+                                              ListTile(
+                                                title: Text(
+                                                 "Account",
+                                                    style: GoogleFonts.dmSans(
+                                                      fontSize: 22,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: darkmode
+                                                          ? Colors.white
+                                                          : Colors.black,
+                                                    ),
+                                                  ),
+                                                  subtitle: Text(
+                                                    "theme: ${darkmode?"Dark mode":"light mode"}",
+                                                    style: GoogleFonts.dmSans(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      color: darkmode
+                                                          ? Colors.grey
+                                                          : Colors.black,
+                                                    ),
+                                                  ),
+                                                  trailing: InkWell(
+                                                    onTap: () {
+                                                      setState(
+                                                        () {
+                                                          darkmode = darkmode
+                                                              ? false
+                                                              : true;
+                                                        },
+                                                      );
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: AvatarGlow(
+  startDelay: const Duration(milliseconds: 1000),
+  glowColor:darkmode? Colors.white:Colors.grey.shade900,
+  //glowShape: BoxShape.circle,
+  //animate: _animate,
+  curve: Curves.fastOutSlowIn,
+  //endRadius: 20,
+  child: CircleAvatar(
+                                                          radius: 12,
+                                                          backgroundColor:
+                                                              darkmode
+                                                                  ? Colors.grey
+                                                                      .shade100
+                                                                  : Colors.grey
+                                                                      .shade900,
+                                                          child: Center(
+                                                              //dark_mode
+                                                              child: Icon(
+                                                            darkmode
+                                                                ? Icons.light_mode
+                                                                : Icons.dark_mode,
+                                                            color:Colors
+                                                                    .deepOrange,
+                                                          ))),
+                                                    ),
+                                                  )),
+                                              ListTile(
+                                                leading: Container(
+                                                  child: Stack(children: [
+                                                    CircleAvatar(
+                                                      radius: 17,
+                                                      backgroundColor:
+                                                          Colors.deepOrange,
+                                                      child: Center(
+                                                        child: Text(
+                                                        "",
+                                                          style: GoogleFonts
+                                                              .lato(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 22),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    /*...
+                                                        .where((c) =>
+                                                            c['username1'] ==
+                                                            sky2["username"]
+                                                                .toString())
+                                                        .map(
+                                                          (ui) => CircleAvatar(
+                                                            radius: 17,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+
+                                                            backgroundImage:
+                                                                NetworkImage(
+                                                              ui['image']
+                                                                  .replaceAll(
+                                                                      " ", ''),
+                                                            ), //ui['image'],
+                                                          ),
+                                                        ),
+                                                    ...verified.map(
+                                                      (ui) => ui['username1'] ==
+                                                                  sky2["username"]
+                                                                      .toString() &&
+                                                              ui["image"] ==
+                                                                  "Zeus"
+                                                          ? const Positioned(
+                                                              right: 0,
+                                                              bottom: 0,
+                                                              child: Icon(
+                                                                  Icons
+                                                                      .verified,
+                                                                  size: 16,
+                                                                  color: Colors
+                                                                      .blue),
+                                                            )
+                                                          : const SizedBox(),
+                                                    ),
+                                                    ...verifiedx.map(
+                                                      (ui) => ui['username1'] ==
+                                                                  sky2["username"]
+                                                                      .toString() &&
+                                                              ui["image"] ==
+                                                                  "Gold"
+                                                          ? const Positioned(
+                                                              right: 0,
+                                                              bottom: 0,
+                                                              child: Icon(
+                                                                Icons.verified,
+                                                                size: 16,
+                                                                color: Color(
+                                                                    0xFFffd700),
+                                                              ))
+                                                          : const SizedBox(
+                                                              //ui['image'],
+                                                              ),
+                                                    ),
+                                                    ...verifiedx.map(
+                                                      (ui) => ui['username1'] ==
+                                                                  sky2["username"]
+                                                                      .toString() &&
+                                                              ui["image"] ==
+                                                                  "green"
+                                                          ? const Positioned(
+                                                              right: 0,
+                                                              bottom: 0,
+                                                              child: Icon(
+                                                                  Icons
+                                                                      .verified,
+                                                                  size: 16,
+                                                                  color: Colors
+                                                                      .green))
+                                                          : const SizedBox(
+                                                              //ui['image'],
+                                                              ),
+                                                    ),
+                                                    ...verifiedx.map(
+                                                      (ui) => ui['username1'] ==
+                                                                  sky2["username"]
+                                                                      .toString() &&
+                                                              ui["image"] ==
+                                                                  "BG"
+                                                          ? Positioned(
+                                                              right: 0,
+                                                              bottom: 0,
+                                                              child: Icon(
+                                                                  Icons
+                                                                      .verified,
+                                                                  size: 16,
+                                                                  color: Colors
+                                                                      .blueGrey
+                                                                      .shade900))
+                                                          : const SizedBox(
+                                                              //ui['image'],
+                                                              ),
+                                                    ),
+                                                    ...verifiedx.map((ui) => ui[
+                                                                    'username1'] ==
+                                                                sky2["username"]
+                                                                    .toString() &&
+                                                            ui["image"] ==
+                                                                "realZeus"
+                                                        ? const Positioned(
+                                                            right: 0,
+                                                            bottom: 0,
+                                                            child: Icon(
+                                                                Icons.verified,
+                                                                size: 16,
+                                                                color: Colors
+                                                                    .grey),
+                                                          )
+                                                        : const SizedBox()),
+                                                  */]),
+                                                ),
+                                                trailing: const CircleAvatar(
+                                                  radius: 5,
+                                                  backgroundColor:
+                                                      Colors.deepOrange,
+                                                ),
+                                                title: Text(
+                                                  //mstudent: getstudent2(),
+                                                  //mstudent2: studentdet,
+                                                  //"${getName(widget.mstudent2, widget.mstudent["image"])}"
+                                                  //"${getName(studentdet, getstudent2()["image"])}", //"${sky2["username"].toString()}",
+                                                  "first_name",
+                                                  style: GoogleFonts.lato(
+                                                    //fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: darkmode
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                  ),
+                                                ),
+                                                subtitle: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        "10}",
+                                                        style: GoogleFonts
+                                                            .lato(
+                                                                //fontSize: 15,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                                color: Colors
+                                                                    .grey),
+                                                      ),
+                                                    ]),
+                                              ),
+                                                Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  height: 0.07,
+                                                  color: darkmode
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                                ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  showModalBottomSheet(
                                           isScrollControlled: true,
                                           context: context,
                                           builder: (context) {
@@ -2004,32 +2314,130 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                   ),
                                                 ),
                                               ),
-                                              bottomNavigationBar: Container(
-                                                height: 60,
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.topCenter,
-                                                  child: Container(
-                                                    width: _bannerAd.size.width
-                                                        .toDouble(),
-                                                    height: _bannerAd
-                                                        .size.height
-                                                        .toDouble(),
-                                                    child:
-                                                        null /*AdWidget(
-                                                        ad: _bannerAd,
-                                                        key: UniqueKey())*/
-                                                    ,
-                                                  ),
-                                                ),
-                                              ),
+                                              
                                             );
                                           });
-                                    },
-                                    child: Icon(Icons.shopping_bag,
-                                        color: darkmode
-                                            ? Colors.white
-                                            : Colors.black)),
+                                                 // scanbadge();
+                                                  //Navigator.pop(context);
+                                                },
+                                                child: ListTile(
+                                                    leading: CircleAvatar(
+                                                        radius: 17,
+                                                        backgroundColor: Colors
+                                                            .grey.shade700,
+                                                        child: const Center(
+                                                            child: Icon(
+                                                                Ionicons.bag,
+                                                                color: Colors
+                                                                    .white))),
+                                                    title: Text(
+                                                      "Recent orders",
+                                                      style: GoogleFonts
+                                                          .lato(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color:
+                                                                  Colors.grey),
+                                                    ),
+                                                    
+                                                    
+                                                    
+                                                    ),
+                                              )
+
+
+                                             , GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    //intrpage
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                             MyAppL(
+                                                              title:
+                                                                  'addaccount',
+                                                                  username1: "${sky["username"]}|${widget.token}|${widget.id}"
+                                                             
+                                                            ) //screen(),
+                                                        ), //MaterialPageRoute
+                                                  );
+                                                },
+                                                child: ListTile(
+                                                    leading: CircleAvatar(
+                                                        radius: 17,
+                                                        backgroundColor: Colors
+                                                            .grey.shade700,
+                                                        child: const Center(
+                                                            child: Icon(
+                                                                Ionicons.log_out_outline,
+                                                                color: Colors
+                                                                    .white))),
+                                                    title: Text(
+                                                     "Log out",
+                                                      style: GoogleFonts
+                                                          .lato(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color:
+                                                                  Colors.grey),
+                                                    )),
+                                              ),
+                                              /*GestureDetector(
+                                                onTap: () {
+                                                  scanbadge();
+                                                  /*
+                                                Navigator.push(
+                                      //intrpage
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => MyAppL(
+                                                title: 'logout',
+                                                username1: "",
+                                              ) //screen(),
+                                          ), //MaterialPageRoute
+                                    );
+                                                */
+                                                },
+                                                child: ListTile(
+                                                    leading: const CircleAvatar(
+                                                        radius: 17,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        child: Center(
+                                                            child: Icon(
+                                                                Ionicons
+                                                                    .exit_outline,
+                                                                color: Colors
+                                                                    .red))),
+                                                    title: Text(
+                                                      "Log out",
+                                                      style: GoogleFonts
+                                                          .lato(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .normal,
+                                                              color:
+                                                                  Colors.red),
+                                                    )),
+                                              ),*/
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ]),
+
+                      
+                                      
+                                    ]
+                                  )
+                                ),
                                 const SizedBox(
                                   width: 5,
                                 )
@@ -2079,6 +2487,8 @@ sharedPreferences.setString('yoi', yoi.toString());
                               bottom: PreferredSize(
                                 preferredSize: const Size.fromHeight(100.0),
                                 child: TabBar(
+                                  dividerColor: Colors.transparent,
+tabAlignment: TabAlignment.start,
                                   isScrollable: true,
                                   indicatorSize: TabBarIndicatorSize.tab,
                                   indicator: const UnderlineTabIndicator(
@@ -2092,6 +2502,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                   indicatorColor: Colors.black,
                                   unselectedLabelColor: Colors.grey[900],
                                   labelColor: Colors.black,
+                                  
                                   tabs: [
                                     Card(
                                         color: Colors.transparent,
@@ -2099,7 +2510,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                         child: Column(
                                           children: [
                                             CircleAvatar(
-                                                radius: 30,
+                                                radius: 35,
                                                 child: Stack(children: [
                                                   Center(
                                                     child: Text(
@@ -2114,7 +2525,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                           c['username1'] ==
                                                           "${widget.firstname}${widget.id}")
                                                       .map((ui) => CircleAvatar(
-                                                            radius: 30,
+                                                            radius: 35,
                                                             backgroundColor:
                                                                 Colors
                                                                     .transparent,
@@ -3071,6 +3482,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                         backgroundColor:
                                                             scaffold1,
                                                         appBar: AppBar(
+                                                        
                                                             centerTitle: true,
                                                             leading:
                                                                 const SizedBox(),
@@ -3550,12 +3962,12 @@ sharedPreferences.setString('yoi', yoi.toString());
                                       : Container(),
                                 ]))),
                   ),
-                  autoPlay: true,
-                  autoPlayDelay: const Duration(seconds: 3),
-                ),
-              ),
-            ))
-        : Scaffold(
+                 // autoPlay: true,
+                 // autoPlayDelay: const Duration(seconds: 3),
+                )
+             
+            
+        ): Scaffold(
             body: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

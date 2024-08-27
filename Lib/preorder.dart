@@ -20,7 +20,7 @@ class _screenxc2State extends State<screenxc2> {
   _navtohome() async {
     await Future.delayed(Duration(milliseconds: 2000), () {});
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => MyAppL(title:'')));//MyHomePage(title: "myRiara")
+        MaterialPageRoute(builder: (context) => MyAppL(title:'', username1: '',)));//MyHomePage(title: "myRiara")
   }
 
   Widget build(BuildContext context) {

@@ -38,35 +38,37 @@ dependencies:
   collection: any
   http: any
   get: any
-  flutter_secure_storage: ^4.2.1
+  flutter_secure_storage: ^9.2.2
   
-  shared_preferences: ^0.5.6+1
+  shared_preferences: ^2.3.2
   
   intl: ^0.17.0
   flutter_barcode_scanner: ^2.0.0
   mpesa_flutter_plugin: ^1.6.0
   timeline_tile: ^2.0.0
   timelines: ^0.1.0
-  avatar_glow: ^2.0.2
-  google_mobile_ads: ^1.0.1
+  avatar_glow: ^3.0.1
+  google_mobile_ads: ^5.1.0
   flutter_beep: ^1.0.0
   qr_flutter: ^4.0.0
   mpesa: ^2.0.2
   flutter_keyboard_visibility: ^5.2.0
-  flutter_local_notifications: ^9.5.0 
-  place_picker: ^0.10.0
-  shimmer: ^2.0.0
-  showcaseview: ^1.1.8
-  fluttertoast: ^6.0.1
-  google_fonts: ^2.1.0
-  flutter_blurhash: ^0.7.0
+  flutter_local_notifications: ^17.2.2 
+  #place_picker: any
+  shimmer: ^3.0.0
+  showcaseview: ^3.0.0
+  fluttertoast: ^8.2.8
+  google_fonts: ^4.0.4
+  flutter_blurhash: ^0.8.2
+  ionicons: ^0.2.2
+  google_sign_in: ^6.2.1
   #showcaseview: any
   #google_mobile_ads: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: any
-  flutter_lints: ^1.0.0
+  flutter_lints: ^4.0.0
   
 flutter_icons: 
     android: true

@@ -9,8 +9,8 @@ class Ninotify {
         android: AndroidNotificationDetails('channel id', 'channel name',channelDescription:"Your description",
         icon:"@mipmap/ic_launcher",
         importance: Importance.max
-        ),
-        iOS: IOSNotificationDetails());
+        ));
+       // iOS: IOSNotificationDetails());
   }
 
   static Future showNotification({

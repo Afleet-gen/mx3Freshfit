@@ -129,13 +129,13 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   controller: itemController,
                 ),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text('Cancel'),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       _addItem(itemController.text);
                       Navigator.pop(context);

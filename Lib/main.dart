@@ -4,7 +4,7 @@
 
 import 'dart:async';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart'; 
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -180,7 +180,7 @@ class _MyAppState extends State<MyApp> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = //http://172.16.12.17:8000/
-        await http.get(Uri.parse('https://afleet.co.ke/chatff/'),
+        await http.get(Uri.parse('http://192.168.100.226:8000/chatff/'),
             headers: headers);
     var results = jsonDecode(utf8.decode(responsev.bodyBytes));
     setState(() {
@@ -200,7 +200,7 @@ class _MyAppState extends State<MyApp> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = //http://172.16.12.17:8000/
-        await http.get(Uri.parse('https://afleet.co.ke/restaurant/'),
+        await http.get(Uri.parse('http://192.168.100.226:8000/restaurant/'),
             headers: headers);
     var results = jsonDecode(responsev.body);
     setState(() {
@@ -220,7 +220,7 @@ class _MyAppState extends State<MyApp> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = await http
-        .get(Uri.parse('https://afleet.co.ke/meff/$id'), headers: headers);
+        .get(Uri.parse('http://192.168.100.226:8000/meff/$id/'), headers: headers);
     var xcv = jsonDecode(responsev.body);
     setState(() {
       this.sky2 = xcv;
@@ -238,7 +238,7 @@ class _MyAppState extends State<MyApp> {
       'Authorization': 'Token ${token}',
     };
     http.Response responsev =
-        await http.post(Uri.parse('https://afleet.co.ke/orderx/'),
+        await http.post(Uri.parse('http://192.168.100.226:8000/orderx/'),
             headers: {
               'Content-Type': 'application/json; charset=UTF-8',
               'Authorization': 'Token $token',
@@ -270,7 +270,7 @@ class _MyAppState extends State<MyApp> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = await http.get(
-        Uri.parse('https://afleet.co.ke/restaurant/' + k),
+        Uri.parse('http://192.168.100.226:8000/restaurant/1'),
         headers: headers);
     var results = jsonDecode(responsev.body);
     setState(() {
@@ -288,7 +288,7 @@ class _MyAppState extends State<MyApp> {
       'Authorization': 'Token $token',
     };
     http.Response responsev = await http
-        .get(Uri.parse('https://afleet.co.ke/orderx/'), headers: headers);
+        .get(Uri.parse('http://192.168.100.226:8000/orderx/'), headers: headers);
     var xcv = jsonDecode(responsev.body);
     setState(() {
       food1 = xcv;
@@ -311,7 +311,7 @@ sharedPreferences.setString('yoi', yoi.toString());
     //value3 == null && value == null
     sharedPreferences.setString('alone', alone.toString());
 */
-    var o3 = jsonDecode(sharedPreferences.getString('sky2'));
+    var o3 = jsonDecode(sharedPreferences.getString('sky2')!);
     //var oo = jsonDecode(sharedPreferences.get('sky2'));
     // = jsonDecode(
     //cart = o2; //jsonDecode(o2);
@@ -384,7 +384,7 @@ sharedPreferences.setString('yoi', yoi.toString());
 //add message
     http.Response
         responsev = //http://172.16.12.17:8000/ + http://192.168.100.74:8000/
-        await http.get(Uri.parse('https://afleet.co.ke/orderx/'),
+        await http.get(Uri.parse('http://192.168.100.226:8000/orderx/'),
             headers: headers);
     var result = jsonDecode(responsev.body);
     setState(() {
@@ -639,9 +639,7 @@ sharedPreferences.setString('yoi', yoi.toString());
     }
 
     return sky2 != null
-        ? ShowCaseWidget(
-            builder: Builder(
-                builder: (context) => Rutimetable(
+        ?  Rutimetable(
                       //food1: food1,
                       title: "1",
                       token: widget.token.toString(),
@@ -649,7 +647,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                       me: sky2['username'].toString(),
                       firstname: sky2['first_name'].toString(),
                       id: sky2['id'].toString(),
-                    )),
+                    
           ) /*Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
@@ -1140,7 +1138,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                                                           height: 50,
                                                                                           width: 250,
                                                                                           decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(20)),
-                                                                                          child: FlatButton(
+                                                                                          child: TextButton(
                                                                                             child: Text(
                                                                                               'generate group',
                                                                                               style: TextStyle(color: Colors.white, fontSize: 25),
@@ -1202,7 +1200,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                                                                                       height: 40,
                                                                                                                       width: 200,
                                                                                                                       decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(20)),
-                                                                                                                      child: FlatButton(
+                                                                                                                      child: TextButton(
                                                                                                                         child: Text(
                                                                                                                           'Share',
                                                                                                                           style: TextStyle(color: Colors.white, fontSize: 25),
@@ -1212,7 +1210,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                           'Authorization': 'Token ${widget.token}',
                         };
                                                                                                                           http.Response responsev = await http
-                            .get(Uri.parse('https://afleet.co.ke/watus/'), headers: headers);
+                            .get(Uri.parse('http://192.168.100.226:8000/watus/'), headers: headers);
                         var xcv = jsonDecode(responsev.body);
                     
                                                                                                                           Navigator.push(
@@ -1227,7 +1225,7 @@ sharedPreferences.setString('yoi', yoi.toString());
                                                                                                                           xcv.map((r) async {
                                                                                                                             print(utf8.encode(titleController2.text));
                                                                                                                             http.Response response1 = await http.post(
-                                                                                              orderx                                Uri.parse('https://afleet.co.ke/chat/'),
+                                                                                              orderx                                Uri.parse('http://192.168.100.226:8000/chat/'),
                                                                                                                               headers: <String, String>{
                                                                                                                                 'Content-Type': 'application/json; charset=UTF-8',
                                                                                                                               }, //'id','sender','message_me','receiver','time'
@@ -1933,6 +1931,7 @@ sharedPreferences.setString('yoi', yoi.toString());
         )*/
             )*/
         : Scaffold(
+         // backgroundColor: darkmode ? Colors.white : Colors.black,
             body: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

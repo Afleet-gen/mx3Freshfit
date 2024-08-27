@@ -227,7 +227,7 @@ class _regS2State extends State<regS2> {
                 decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(20)),
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     setState(() {
                       createAlbum();
@@ -242,8 +242,8 @@ class _regS2State extends State<regS2> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                   Text("User Account Created"),
-                                  FlatButton(
-                                    color: Colors.green,
+                                  TextButton(
+                                    //color: Colors.green,
                                     onPressed: () {
                                       setState(() {
                                         createAlbumX();
